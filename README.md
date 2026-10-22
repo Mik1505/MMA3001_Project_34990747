@@ -12,9 +12,9 @@
 
 ## 1. Project Purpose & Engineering Context
 
-In commercial meat processing and butchery facilities, vacuum-packaged pork rashers are processed on high-speed thermoformed packaging lines at rates of 60–100 trays per minute. Maintaining absolute hermetic package barrier integrity is essential: compromised seals or punctures allow oxygen ingress, which accelerates aerobic bacterial proliferation, rapid lipid oxidation, myoglobin discoloration, and commercial product recall risks.
+In commercial meat processing and butchery facilities, vacuum-packaged pork rashers are processed on high-speed thermoformed packaging lines at rates of 60–100 trays per minute. Maintaining absolute hermetic package barrier integrity is essential: compromised seals or film punctures allow oxygen ingress, which accelerates aerobic bacterial proliferation, rapid lipid oxidation, myoglobin discoloration, and serious commercial product recall risks.
 
-Manual visual inspection on factory lines is susceptible to human operator fatigue, subjective bias, and inspection escape rates. This repository delivers an autonomous, real-time computational quality assurance pipeline combining computer vision, machine learning, numerical quadrature, and dynamic differential equation modeling.
+Manual visual inspection on factory lines is susceptible to human operator fatigue, subjective classification bias, and inspection escape rates. This repository delivers an autonomous, real-time computational quality assurance pipeline combining computer vision, machine learning, numerical quadrature, and dynamic differential equation modeling.
 
 ![Sample Pork Rasher Packaging Inspection Frames](artifacts/fig1_sample_inspection.png)
 *Figure 1: Representative inline pork rasher inspection frames from the Roboflow benchmark dataset, illustrating compliant packaging (Pass), flange seal breach, film puncture, and discoloured meat defect states.*
@@ -22,17 +22,17 @@ Manual visual inspection on factory lines is susceptible to human operator fatig
 ### Core Engineering Capabilities:
 1. **Domain Guardrails & Radiometric Validation:** Enforces strict physical preconditions on input image tensors, rejecting corrupted, saturated, out-of-focus, or out-of-domain frames.
 2. **Dual Classification Engines:** 
-   - **Baseline Heuristic:** Colorimetric and morphological thresholding ($1.61\text{ ms/frame} \implies 621\text{ FPS}$) prioritizing 100% defect recall to eliminate consumer safety risks.
-   - **Random Forest Machine Learning:** Multi-feature statistical classification ($8.71\text{ ms/frame} \implies 115\text{ FPS}$) reducing false rejection scrap by $33.3\%$.
-3. **2D Numerical Defect Surface Area Sizing:** Composite Simpson's 1/3 and Trapezoidal quadrature calculating physical defect surface area ($mm^2$) with asymptotic spatial grid refinement checks.
-4. **Transient Vacuum Leak ODE Simulation:** Dynamic modeling of packaging pressure decay under micro-leaks ($\frac{dP}{dt} = -k(P - P_{atm})$), verifying Euler, RK2 Heun, and Classical RK4 temporal stability and convergence.
-5. **Computational Profiling & Roofline Analysis:** Hardware resource profiling establishing that inspection execution is bound by memory bandwidth ($4.0\text{--}5.0\text{ FLOPs/byte}$), exceeding conveyor throughput requirements by up to $372\times$.
+   - **Baseline Heuristic:** Colorimetric and morphological thresholding (1.61 ms/frame, 621.2 FPS throughput) prioritizing 100% defect recall to eliminate consumer safety risks.
+   - **Random Forest Machine Learning:** Multi-feature statistical classification (8.71 ms/frame, 114.9 FPS throughput) reducing false rejection scrap by 33.3%.
+3. **2D Numerical Defect Surface Area Sizing:** Composite Simpson's 1/3 and Trapezoidal quadrature calculating physical defect surface area in mm² with asymptotic spatial grid refinement checks.
+4. **Transient Vacuum Leak ODE Simulation:** Dynamic modeling of packaging pressure decay under micro-leaks (`dP/dt = -k(P - P_atm)`), verifying Euler, RK2 Heun, and Classical RK4 temporal stability and convergence.
+5. **Computational Profiling & Roofline Analysis:** Hardware resource profiling establishing that inspection execution is bound by memory bandwidth (4.0–5.0 FLOPs/byte), exceeding conveyor throughput requirements by up to 372×.
 
 ---
 
 ## 2. GitHub Repository Structure & Directory Navigation
 
-The repository is organized into modular production directories adhering to industry software engineering best practices:
+All repository directories are structured in lowercase format, separating code, tests, documentation, visual artifacts, dataset images, and formal deliverables:
 
 ```text
 MMA3001_Project_34990747/
@@ -43,7 +43,7 @@ MMA3001_Project_34990747/
 ├── MMA3001_Project_Report_34990747.docx # Formal written engineering research report
 ├── MMA3001_Project_Presentation_34990747.pptx # Project executive presentation slide deck
 │
-├── src/                                # Core Production Source Code Modules
+├── src/                                # Core production Python source code modules
 │   ├── __init__.py                     # Package initialization and namespace exports
 │   ├── validator.py                    # Input validation and domain guardrail enforcement
 │   ├── dataset.py                      # Roboflow dataset loader & benchmark ingestion
@@ -53,28 +53,38 @@ MMA3001_Project_34990747/
 │   ├── dynamic_ode.py                  # Dynamic ODE solvers (Euler, RK2 Heun, RK4) & stability analysis
 │   └── profiler.py                     # Latency, FPS throughput, FLOPs & Roofline profiler
 │
-├── tests/                              # Automated Verification Suite (Pytest)
+├── tests/                              # Automated verification suite (pytest)
 │   ├── test_pipeline.py                # 13 automated unit, integration, physics, and convergence tests
 │   └── pytest_report.txt               # Verification execution logs and test assertions
 │
-├── docs/                               # HTML API Documentation (Compiled via pdoc)
+├── docs/                               # HTML API documentation (compiled via pdoc)
 │   ├── index.html                      # Interactive documentation portal
 │   ├── src.html                        # Comprehensive API specification and docstring reference
 │   └── search.js                       # Client-side API search index
 │
-└── artifacts/                          # Visual Inspection Figures & Verification Deliverables
-    ├── fig1_sample_inspection.png      # Pork rasher inspection frames across defect categories
-    ├── fig2_confusion_matrices.png     # Baseline Heuristic vs Random Forest confusion matrices
-    ├── fig3_convergence_integration_ode.png # 2D quadrature grid refinement and ODE log-log error scaling
-    ├── fig4_dynamic_responses.png      # Vacuum decay transient curves and sorting dynamics
-    └── fig5_roofline_model.png         # Hardware roofline arithmetic intensity model
+├── artifacts/                          # Visual inspection figures & verification deliverables
+│   ├── fig1_sample_inspection.png      # Pork rasher inspection frames across defect categories
+│   ├── fig2_confusion_matrices.png     # Baseline Heuristic vs Random Forest confusion matrices
+│   ├── fig3_convergence_integration_ode.png # 2D quadrature grid refinement and ODE error scaling
+│   ├── fig4_dynamic_responses.png      # Vacuum decay transient curves and sorting dynamics
+│   └── fig5_roofline_model.png         # Hardware roofline arithmetic intensity model
+│
+├── pork rasher data/                   # Roboflow Universe V4 Pork Rasher Packaging dataset
+│   ├── train/                          # Training image frames and bounding-box label annotations
+│   ├── valid/                          # Validation split
+│   ├── test/                           # Hold-out evaluation test split
+│   └── data.yaml                       # Dataset class and partition configuration
+│
+└── report/                             # Dedicated folder for the written engineering research report
 ```
 
 ### Directory Content & Purpose:
 - **`src/` (Source Code):** Houses the modular, object-oriented Python codebase. Every algorithmic step is encapsulated in dedicated, reusable classes with strict typing, docstrings, and vectorization.
-- **`tests/` (Unit & Regression Tests):** Houses the `pytest` verification suite (`tests/test_pipeline.py`). It validates input radiometric guardrails, classification accuracy, 2D numerical quadrature error tolerances ($<1.5\%$), ODE temporal convergence orders ($\mathcal{O}(\Delta t^1), \mathcal{O}(\Delta t^2), \mathcal{O}(\Delta t^4)$), and physical non-negativity constraints.
+- **`tests/` (Unit & Regression Tests):** Houses the `pytest` verification suite (`tests/test_pipeline.py`). It validates input radiometric guardrails, classification accuracy, 2D numerical quadrature error tolerances (< 1.5%), ODE temporal convergence orders (`O(Δt)`, `O(Δt²)`, `O(Δt⁴)`), and physical non-negativity constraints.
 - **`docs/` (Interactive Documentation):** Auto-generated HTML documentation compiled directly from module docstrings using `pdoc`. Run `pdoc -o docs src/` to regenerate.
 - **`artifacts/` (Visual Figures & Outputs):** Stores publication-quality PNG figures generated during pipeline execution, illustrating real pork rasher images, classification confusion matrices, convergence plots, and hardware roofline profiles.
+- **`pork rasher data/` (Benchmark Dataset):** Contains the official Roboflow Version 4 dataset partitions (`train`, `valid`, `test`) with full bounding-box coordinates for pork rasher packaging defects.
+- **`report/` (Written Deliverable):** Dedicated folder for the final written engineering research report.
 
 ---
 
@@ -84,26 +94,26 @@ MMA3001_Project_34990747/
 
 | Parameter Category | Specification | Technical Definition / Mathematical Range |
 |---|---|---|
-| **Primary Input** | Inspection Image Tensor | 3D array: $H \times W \times C = 540 \times 720 \times 3$, `uint8`, range $[0, 255]$ RGB |
-| **Spatial Calibration** | Pixel-to-Physical Scaling | $\Delta x = \Delta y = 0.3333\text{ mm/pixel}$ ($3.0\text{ pixels/mm}$); Tray Area = $43,200\text{ mm}^2$ |
-| **Process Pressures** | Thermoformer Vacuum State | Ambient $P_{atm} = 101.325\text{ kPa}$; Initial sealed target $P_{vac} = 20.0\text{ kPa}$ |
-| **Leak Physics** | Orifice Decay Coefficient | $k = 0.80\text{ s}^{-1}$ governing $\frac{dP}{dt} = -k(P - P_{atm})$ |
+| **Primary Input** | Inspection Image Tensor | 3D array: 540 × 720 × 3, uint8, range [0, 255] RGB |
+| **Spatial Calibration** | Pixel-to-Physical Scaling | Δx = Δy = 0.3333 mm/pixel (3.0 px/mm); Tray Area = 43,200 mm² |
+| **Process Pressures** | Thermoformer Vacuum State | Ambient P_atm = 101.325 kPa; Initial vacuum target P_vac = 20.0 kPa |
+| **Leak Physics** | Orifice Decay Coefficient | k = 0.80 s⁻¹ governing `dP/dt = -k(P - P_atm)` |
 | **Primary Output 1** | Binary Classification Verdict | Discrete decision: `0 = Pass` (Compliant), `1 = Fail` (Defective / Compromised) |
-| **Primary Output 2** | Physical Defect Surface Area | Continuous scalar $A_{defect} \in [0, 43200]\text{ mm}^2$ calculated via 2D Simpson's 1/3 rule |
-| **Primary Output 3** | Rejection Actuation Trigger | Boolean gate triggering downstream pneumatic ejector for packages exceeding $16.6\text{ mm}^2$ defect area |
-| **Primary Output 4** | Vacuum Integrity Lifespan | Time $t_{crit}$ to reach atmospheric pressure equalization ($P(t) \ge 90\text{ kPa}$) |
+| **Primary Output 2** | Physical Defect Surface Area | Continuous scalar A_defect in [0, 43,200] mm² calculated via 2D Simpson's 1/3 rule |
+| **Primary Output 3** | Rejection Actuation Trigger | Boolean gate triggering downstream pneumatic ejector for packages exceeding 16.6 mm² defect area |
+| **Primary Output 4** | Vacuum Integrity Lifespan | Time t_crit to reach atmospheric equalization (P(t) ≥ 90 kPa) |
 
 ### 3.2 Module-by-Module Input / Output Specification
 
 | Module | Core Function / Class | Input Data & Domain | Output Data & Units | Failure Mode Guardrails |
 |---|---|---|---|---|
-| `src/validator.py` | `validate_image_tensor()` | Image tensor `ndarray`, expected shape $(540, 720, 3)$, dtype `uint8` | Validated boolean status + sanitized image | Rejects non-3D arrays, saturated pixels ($>98\%$ white), pitch-black frames, or invalid channels |
-| `src/dataset.py` | `PorkPackagingDataset` | Benchmark directory path containing Roboflow V4 images & annotations | Normalized image arrays $[N, 540, 720, 3]$, binary masks $[N, 540, 720]$, labels $[N]$ | Verifies label cardinality, missing files, and bounding-box coordinate consistency |
-| `src/baseline_model.py` | `predict_frame()` | Image tensor $(540, 720, 3)$, calibrated threshold $\tau_{defect} = 150\text{ px}$ | Binary label (`0` or `1`), binary defect mask $(540, 720)$ | Enforces minimum defect area ($>16.6\text{ mm}^2$) to reject sensor noise |
-| `src/ml_model.py` | `extract_features()` / `predict()` | Image tensor $(540, 720, 3)$ | 6D feature vector (Color moments, flange redness, cavity dark ratio) $\to$ Class prediction + Probability | Feature vector range validation, checks for NaN / Inf features |
-| `src/numerical_integration.py` | `simpsons_2d()` / `trapezoidal_2d()` | 2D binary defect mask $(H, W)$, spatial resolution $(\Delta x, \Delta y)$ | Integrated defect surface area ($mm^2$) | Physical bounds check: $0 \le A_{defect} \le A_{tray}$; forces non-negativity |
-| `src/dynamic_ode.py` | `solve_euler()`, `solve_rk2()`, `solve_rk4()` | Initial vacuum $P_0=20\text{ kPa}$, ambient $P_{atm}=101.3\text{ kPa}$, time step $\Delta t$ | Time array $t$, simulated pressure array $P(t)$ [kPa] | Enforces Euler stability criterion: $\Delta t < \frac{2}{k} = 2.5\text{ s}$ |
-| `src/profiler.py` | `profile()` / `roofline()` | Model detector instance, test image batch ($N$ frames) | Mean latency (ms), throughput (FPS), Arithmetic Intensity (FLOPs/byte) | Measures timing drift across 25 repeated cycles |
+| `src/validator.py` | `validate_image_tensor()` | Image tensor `ndarray`, expected shape 540 × 720 × 3, dtype uint8 | Validated boolean status + sanitized image | Rejects non-3D arrays, saturated pixels (> 98% white), pitch-black frames, or invalid channels |
+| `src/dataset.py` | `RoboflowDatasetLoader` | Benchmark directory path (`pork rasher data`) containing Roboflow V4 images & annotations | Normalized image arrays [N, 540, 720, 3], binary masks [N, 540, 720], labels [N] | Verifies label cardinality, missing files, and bounding-box coordinate consistency |
+| `src/baseline_model.py` | `predict_frame()` | Image tensor 540 × 720 × 3, calibrated threshold τ_defect = 150 px | Binary label (`0` or `1`), binary defect mask (540, 720) | Enforces minimum defect area (> 16.6 mm²) to reject sensor noise |
+| `src/ml_model.py` | `extract_features()` / `predict()` | Image tensor 540 × 720 × 3 | 6D feature vector (Color moments, flange redness, cavity dark ratio) → Class prediction + Probability | Feature vector range validation, checks for NaN / Inf features |
+| `src/numerical_integration.py` | `simpsons_2d()` / `trapezoidal_2d()` | 2D binary defect mask (H, W), spatial resolution (Δx, Δy) | Integrated defect surface area (mm²) | Physical bounds check: 0 ≤ A_defect ≤ A_tray; forces non-negativity |
+| `src/dynamic_ode.py` | `solve_euler()`, `solve_rk2()`, `solve_rk4()` | Initial vacuum P₀ = 20 kPa, ambient P_atm = 101.3 kPa, time step Δt | Time array t, simulated pressure array P(t) [kPa] | Enforces Euler stability criterion: Δt < 2/k = 2.5 s |
+| `src/profiler.py` | `profile()` / `roofline()` | Model detector instance, test image batch (N frames) | Mean latency (ms), throughput (FPS), Arithmetic Intensity (FLOPs/byte) | Measures timing drift across 25 repeated cycles |
 
 ---
 
@@ -147,13 +157,13 @@ flowchart TD
 | Course Practical Theme | Project Module | Technical Implementation in Codebase |
 |---|---|---|
 | **Week 1: Data & Version Control** | `src/validator.py`, `README.md` | Git version control, reproducible workflows, radiometric input guardrails, and ethical AI attribution. |
-| **Week 2: Profiling & Roofline Model** | `src/profiler.py` | Latency benchmarking (FPS), memory footprint ($1.17\text{ MB/frame}$), FLOP counters, and operational arithmetic intensity ($4.0\text{--}5.0\text{ FLOPs/byte}$). |
-| **Week 3: Discrete Prediction & Support** | `src/baseline_model.py` | Discrete Pass/Fail inspection classification, support domain specification, and physical minimum size constraints ($\ge 16.6\text{ mm}^2$). |
+| **Week 2: Profiling & Roofline Model** | `src/profiler.py` | Latency benchmarking (FPS), memory footprint (1.17 MB/frame), FLOP counters, and operational arithmetic intensity (4.0–5.0 FLOPs/byte). |
+| **Week 3: Discrete Prediction & Support** | `src/baseline_model.py` | Discrete Pass/Fail inspection classification, support domain specification, and physical minimum size constraints (≥ 16.6 mm²). |
 | **Week 5: Machine Learning Classification** | `src/ml_model.py` | Multi-domain feature engineering (color moments, flange redness, cavity dark ratio) and Random Forest classifier optimizing Recall for defect detection. |
-| **Week 6: Numerical Quadrature** | `src/numerical_integration.py` | 2D Composite Trapezoidal and Simpson's 1/3 integration over 2D pixel grids; comparison with 2D Gauss-Legendre quadrature; asymptotic grid refinement study ($\Delta x, \Delta y \to 0$). |
-| **Week 7: Dynamic ODEs** | `src/dynamic_ode.py` | 1st-order vacuum leak decay $\frac{dP}{dt} = -k(P - P_{atm})$ comparing Explicit Euler ($\mathcal{O}(\Delta t^1)$), RK2 Heun's method ($\mathcal{O}(\Delta t^2)$), Classical RK4 ($\mathcal{O}(\Delta t^4)$), and exact analytical solution. |
-| **Week 9: Numerical Stability & Convergence** | `src/dynamic_ode.py` | Explicit Euler stability criterion $\Delta t < \frac{2}{k} = 2.5\text{ s}$; temporal convergence order comparisons ($\mathcal{O}(\Delta t)$ vs $\mathcal{O}(\Delta t^2)$ vs $\mathcal{O}(\Delta t^4)$). |
-| **Week 10: Physics Regularization & Constraints** | `src/numerical_integration.py` | Enforcing physical non-negativity and total bounding area constraints ($A_{defect} \le A_{tray} = 43,200\text{ mm}^2$). |
+| **Week 6: Numerical Quadrature** | `src/numerical_integration.py` | 2D Composite Trapezoidal and Simpson's 1/3 integration over 2D pixel grids; comparison with 2D Gauss-Legendre quadrature; asymptotic grid refinement study (Δx, Δy → 0). |
+| **Week 7: Dynamic ODEs** | `src/dynamic_ode.py` | 1st-order vacuum leak decay `dP/dt = -k(P - P_atm)` comparing Explicit Euler `O(Δt)`, RK2 Heun's method `O(Δt²)`, Classical RK4 `O(Δt⁴)`, and exact analytical solution. |
+| **Week 9: Numerical Stability & Convergence** | `src/dynamic_ode.py` | Explicit Euler stability criterion Δt < 2/k = 2.5 s; temporal convergence order comparisons (`O(Δt)` vs `O(Δt²)` vs `O(Δt⁴)`). |
+| **Week 10: Physics Informed Boundary Constraints** | `src/numerical_integration.py` | Enforcing physical non-negativity and total bounding area constraints (A_defect ≤ A_tray = 43,200 mm²). |
 
 ---
 
@@ -169,11 +179,11 @@ flowchart TD
 *Figure 2: Confusion matrices comparing Baseline Heuristic (left, optimizing 100% recall) and Random Forest ML (right, optimizing precision).*
 
 ### 6.2 2D Numerical Quadrature & Dynamic ODE Convergence
-- **Spatial Grid Refinement:** 2D Composite Simpson's 1/3 quadrature converged from $5353.47\text{ mm}^2$ on the full grid to within $1.5\%$ relative difference under $4\times$ downsampling, demonstrating mesh independence.
+- **Spatial Grid Refinement:** 2D Composite Simpson's 1/3 quadrature converged from 5353.47 mm² on the full grid to within 1.5% relative difference under 4× downsampling, demonstrating mesh independence.
 - **Temporal Convergence Verification:** Log-log error scaling against analytical exact solutions confirms theoretical asymptotic orders:
-  - **Explicit Euler:** Observed slope = **0.99** ($\approx \mathcal{O}(\Delta t^1)$)
-  - **RK2 Heun:** Observed slope = **2.00** ($\approx \mathcal{O}(\Delta t^2)$)
-  - **Classical RK4:** Observed slope = **4.01** ($\approx \mathcal{O}(\Delta t^4)$)
+  - **Explicit Euler:** Observed slope = **0.99** (≈ `O(Δt)`)
+  - **RK2 Heun:** Observed slope = **2.00** (≈ `O(Δt²)`)
+  - **Classical RK4:** Observed slope = **4.01** (≈ `O(Δt⁴)`)
 
 ![Numerical Convergence](artifacts/fig3_convergence_integration_ode.png)
 *Figure 3: (a) Spatial grid refinement study for 2D composite quadrature on real packaging tear masks. (b) Temporal convergence rates for Euler, RK2 Heun, and Classical RK4 ODE solvers.*
@@ -182,11 +192,11 @@ flowchart TD
 Evaluating packaging pressure equalisation across time steps verifies numerical stability and demonstrates the risk of Euler lag when simulating high-speed packaging lines:
 
 ![Vacuum Decay Dynamics](artifacts/fig4_dynamic_responses.png)
-*Figure 4: (a) Packaging pressure equalisation curves comparing analytical exact solution with Euler, RK2 Heun, and RK4 methods at $\Delta t = 0.2\text{ s}$. (b) Dynamic sorting rejector displacement.*
+*Figure 4: (a) Packaging pressure equalisation curves comparing analytical exact solution with Euler, RK2 Heun, and RK4 methods at Δt = 0.2 s. (b) Dynamic sorting rejector displacement.*
 
 ### 6.4 Hardware Roofline Model & Operational Arithmetic Intensity
-- **Throughput:** Baseline heuristic runs in **1.61 ms** ($621.2\text{ FPS}$); Random Forest runs in **8.71 ms** ($114.9\text{ FPS}$). Both comfortably exceed factory conveyor speed requirements ($1.6\text{ FPS}$ at 100 trays/min).
-- **Arithmetic Intensity:** Baseline = $4.0\text{ FLOPs/byte}$; Random Forest = $5.0\text{ FLOPs/byte}$. Both models reside firmly in the **memory bandwidth-bound regime**; performance is governed by memory throughput rather than ALU clock speed.
+- **Throughput:** Baseline heuristic runs in **1.61 ms** (621.2 FPS); Random Forest runs in **8.71 ms** (114.9 FPS). Both comfortably exceed factory conveyor speed requirements (1.6 FPS at 100 trays/min).
+- **Arithmetic Intensity:** Baseline = 4.0 FLOPs/byte; Random Forest = 5.0 FLOPs/byte. Both models reside firmly in the **memory bandwidth-bound regime**; performance is governed by memory throughput rather than ALU clock speed.
 
 ![Hardware Roofline Model](artifacts/fig5_roofline_model.png)
 *Figure 5: Hardware roofline model illustrating memory bandwidth saturation for both baseline and machine learning inspection pipelines.*
@@ -199,8 +209,9 @@ Evaluating packaging pressure equalisation across time steps verifies numerical 
 1. Open the deliverable notebook: `MMA3001 Project Colab Notebook 34990747.ipynb` in Google Colab.
 2. In Colab, store your GitHub Personal Access Token in Secrets (`GH_PAT`).
 3. Run all cells sequentially. The notebook will:
-   - Authenticate and pull the repository.
-   - Load and validate Roboflow V4 packaging images.
+   - Authenticate and synchronize the repository.
+   - Clean and organize all GitHub folders into lowercase.
+   - Load and validate Roboflow V4 packaging images from `pork rasher data`.
    - Train and benchmark detectors.
    - Compute 2D numerical quadrature and solve dynamic ODEs.
    - Execute the 13-test `pytest` verification suite (`tests/test_pipeline.py`).
@@ -241,9 +252,9 @@ This project utilized Generative Artificial Intelligence tools, specifically **G
 
 ### Critical Verification, Modification & Engineering Oversight
 All code, mathematical equations, parameters, and results were subjected to rigorous independent human review and verification:
-- **Vectorization vs Loop Refactoring:** AI-generated drafts initially proposed nested Python `for` loops across image pixels for feature extraction and numerical quadrature. These were rejected and replaced with vectorized NumPy matrix slicing and broadcasting operations, improving per-frame execution speed from $380\text{ ms}$ down to $1.61\text{ ms}$ ($236\times$ speedup).
-- **Mathematical Convergence Verification:** Analytical solutions ($P(t) = P_{atm} + (P_{vac} - P_{atm})e^{-kt}$) and exact geometric areas were derived by hand to verify the empirical convergence rates of Euler ($\mathcal{O}(\Delta t)$), RK2 ($\mathcal{O}(\Delta t^2)$), RK4 ($\mathcal{O}(\Delta t^4)$), and Simpson's 1/3 quadrature ($\mathcal{O}(h^4)$).
-- **Physics Guardrails:** The author manually implemented physical boundary constraints (non-negativity of defect area, upper limit $A_{defect} \le 43,200\text{ mm}^2$, and Euler stability threshold $\Delta t < 2.5\text{ s}$) that were absent in initial AI suggestions.
+- **Vectorization vs Loop Refactoring:** AI-generated drafts initially proposed nested Python `for` loops across image pixels for feature extraction and numerical quadrature. These were rejected and replaced with vectorized NumPy matrix slicing and broadcasting operations, improving per-frame execution speed from 380 ms down to 1.61 ms (a 236× speedup).
+- **Mathematical Convergence Verification:** Analytical solutions `P(t) = P_atm + (P_vac - P_atm)e^(-kt)` and exact geometric areas were derived by hand to verify the empirical convergence rates of Euler `O(Δt)`, RK2 `O(Δt²)`, RK4 `O(Δt⁴)`, and Simpson's 1/3 quadrature `O(h⁴)`.
+- **Physics Guardrails:** The author manually implemented physical boundary constraints (non-negativity of defect area, upper limit A_defect ≤ 43,200 mm², and Euler stability threshold Δt < 2.5 s) that were absent in initial AI suggestions.
 
 The author takes full intellectual ownership and responsibility for all algorithms, derivations, code, documentation, and findings presented in this repository.
 
