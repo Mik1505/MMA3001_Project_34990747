@@ -1,0 +1,3 @@
+Model,MFLOPs,Memory (MB),Arithmetic Intensity (FLOPs/B)
+Baseline Heuristic,4.67,1.17,4.0
+Random Forest ML,5.83,1.17,5.0

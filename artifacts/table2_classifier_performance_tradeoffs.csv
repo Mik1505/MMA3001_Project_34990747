@@ -1,0 +1,5 @@
+Metric,Baseline,Random Forest
+Accuracy,85.0%,83.8%
+Recall,100.0%,92.6%
+Precision,85.0%,88.7%
+F1-Score,0.919,0.906
