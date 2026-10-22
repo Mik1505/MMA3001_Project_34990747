@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.4, pytest-9.1.1, pluggy-1.6.0 -- /Users/mikaylaholden/Library/CloudStorage/GoogleDrive-mhol0036@student.monash.edu/My Drive/MMA3001/Agent/.venv/bin/python3.12
+cachedir: .pytest_cache
+rootdir: /Users/mikaylaholden/Library/CloudStorage/GoogleDrive-mhol0036@student.monash.edu/My Drive/MMA3001
+collecting ... collected 10 items
+
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_input_validator_valid_image PASSED [ 10%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_input_validator_wrong_dimension PASSED [ 20%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_input_validator_blackout PASSED [ 30%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_input_validator_out_of_domain_noise PASSED [ 40%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_baseline_detector PASSED [ 50%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_ml_detector_training_and_inference PASSED [ 60%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_numerical_integration_synthetic_geometry PASSED [ 70%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_numerical_integration_physical_bounds PASSED [ 80%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_dynamic_ode_analytical_accuracy PASSED [ 90%]
+MMA3001 Project/MMA3001_Project_34990747/tests/test_pipeline.py::test_dynamic_ode_stability_limit PASSED [100%]
+
+============================== 10 passed in 8.16s ==============================
