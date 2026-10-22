@@ -5,8 +5,7 @@
 **Student Email:** [mhol0036@student.monash.edu](mailto:mhol0036@student.monash.edu)  
 **Unit:** MMA3001 - Numerical Methods and Machine Learning  
 **Institution:** Department of Mechanical and Aerospace Engineering, Monash University  
-**GitHub Repository:** [https://github.com/Mik1505/MMA3001_Project_34990747](https://github.com/Mik1505/MMA3001_Project_34990747)  
-**Deliverables:** Google Colab Executable Notebook, Technical Report (`.docx`), Presentation Slide Deck (`.pptx`)
+**GitHub Repository:** [https://github.com/Mik1505/MMA3001_Project_34990747](https://github.com/Mik1505/MMA3001_Project_34990747)
 
 ---
 
@@ -32,16 +31,33 @@ Manual visual inspection on factory lines is susceptible to human operator fatig
 
 ## 2. GitHub Repository Structure & Directory Navigation
 
-All repository directories are structured in lowercase format, separating code, tests, documentation, visual artifacts, dataset images, and formal deliverables:
+All repository directories are structured in lowercase format, matching the GitHub repository layout:
 
 ```text
 MMA3001_Project_34990747/
 ├── README.md                           # Master orientation, engineering context, directory guide, and AI statement
 ├── LICENSE                             # MIT Open Source License
-├── requirements.txt                    # Pinned Python dependencies (NumPy, SciPy, OpenCV, Scikit-Learn, Pytest, pdoc)
-├── MMA3001_Project_34990747.ipynb      # Complete executable Colab notebook (all code, visualizations, and outputs)
-├── MMA3001_Project_Report_34990747.docx # Formal written engineering research report
-├── MMA3001_Project_Presentation_34990747.pptx # Project executive presentation slide deck
+├── .gitignore                          # Git file exclusion rules
+│
+├── artifacts/                          # Visual inspection figures & verification deliverables
+│   ├── fig1_sample_inspection.png      # Pork rasher inspection frames across defect categories
+│   ├── fig2_confusion_matrices.png     # Baseline Heuristic vs Random Forest confusion matrices
+│   ├── fig3_convergence_integration_ode.png # 2D quadrature grid refinement and ODE error scaling
+│   ├── fig4_dynamic_responses.png      # Vacuum decay transient curves and sorting dynamics
+│   └── fig5_roofline_model.png         # Hardware roofline arithmetic intensity model
+│
+├── docs/                               # HTML API documentation (compiled via pdoc)
+│   ├── index.html                      # Interactive documentation portal
+│   ├── src.html                        # Comprehensive API specification and docstring reference
+│   └── search.js                       # Client-side API search index
+│
+├── pork rasher data/                   # Roboflow Universe V4 Pork Rasher Packaging dataset
+│   ├── train/                          # Training image frames and bounding-box label annotations
+│   ├── valid/                          # Validation split
+│   ├── test/                           # Hold-out evaluation test split
+│   └── data.yaml                       # Dataset class and partition configuration
+│
+├── report/                             # Dedicated folder for the written engineering research report
 │
 ├── src/                                # Core production Python source code modules
 │   ├── __init__.py                     # Package initialization and namespace exports
@@ -53,38 +69,18 @@ MMA3001_Project_34990747/
 │   ├── dynamic_ode.py                  # Dynamic ODE solvers (Euler, RK2 Heun, RK4) & stability analysis
 │   └── profiler.py                     # Latency, FPS throughput, FLOPs & Roofline profiler
 │
-├── tests/                              # Automated verification suite (pytest)
-│   ├── test_pipeline.py                # 13 automated unit, integration, physics, and convergence tests
-│   └── pytest_report.txt               # Verification execution logs and test assertions
-│
-├── docs/                               # HTML API documentation (compiled via pdoc)
-│   ├── index.html                      # Interactive documentation portal
-│   ├── src.html                        # Comprehensive API specification and docstring reference
-│   └── search.js                       # Client-side API search index
-│
-├── artifacts/                          # Visual inspection figures & verification deliverables
-│   ├── fig1_sample_inspection.png      # Pork rasher inspection frames across defect categories
-│   ├── fig2_confusion_matrices.png     # Baseline Heuristic vs Random Forest confusion matrices
-│   ├── fig3_convergence_integration_ode.png # 2D quadrature grid refinement and ODE error scaling
-│   ├── fig4_dynamic_responses.png      # Vacuum decay transient curves and sorting dynamics
-│   └── fig5_roofline_model.png         # Hardware roofline arithmetic intensity model
-│
-├── pork rasher data/                   # Roboflow Universe V4 Pork Rasher Packaging dataset
-│   ├── train/                          # Training image frames and bounding-box label annotations
-│   ├── valid/                          # Validation split
-│   ├── test/                           # Hold-out evaluation test split
-│   └── data.yaml                       # Dataset class and partition configuration
-│
-└── report/                             # Dedicated folder for the written engineering research report
+└── tests/                              # Automated verification suite (pytest)
+    ├── test_pipeline.py                # 13 automated unit, integration, physics, and convergence tests
+    └── pytest_report.txt               # Verification execution logs and test assertions
 ```
 
 ### Directory Content & Purpose:
-- **`src/` (Source Code):** Houses the modular, object-oriented Python codebase. Every algorithmic step is encapsulated in dedicated, reusable classes with strict typing, docstrings, and vectorization.
-- **`tests/` (Unit & Regression Tests):** Houses the `pytest` verification suite (`tests/test_pipeline.py`). It validates input radiometric guardrails, classification accuracy, 2D numerical quadrature error tolerances (< 1.5%), ODE temporal convergence orders (`O(Δt)`, `O(Δt²)`, `O(Δt⁴)`), and physical non-negativity constraints.
-- **`docs/` (Interactive Documentation):** Auto-generated HTML documentation compiled directly from module docstrings using `pdoc`. Run `pdoc -o docs src/` to regenerate.
 - **`artifacts/` (Visual Figures & Outputs):** Stores publication-quality PNG figures generated during pipeline execution, illustrating real pork rasher images, classification confusion matrices, convergence plots, and hardware roofline profiles.
+- **`docs/` (Interactive Documentation):** Auto-generated HTML documentation compiled directly from module docstrings using `pdoc`. Run `pdoc -o docs src/` to regenerate.
 - **`pork rasher data/` (Benchmark Dataset):** Contains the official Roboflow Version 4 dataset partitions (`train`, `valid`, `test`) with full bounding-box coordinates for pork rasher packaging defects.
 - **`report/` (Written Deliverable):** Dedicated folder for the final written engineering research report.
+- **`src/` (Source Code):** Houses the modular, object-oriented Python codebase. Every algorithmic step is encapsulated in dedicated, reusable classes with strict typing, docstrings, and vectorization.
+- **`tests/` (Unit & Regression Tests):** Houses the `pytest` verification suite (`tests/test_pipeline.py`). It validates input radiometric guardrails, classification accuracy, 2D numerical quadrature error tolerances (< 1.5%), ODE temporal convergence orders (`O(Δt)`, `O(Δt²)`, `O(Δt⁴)`), and physical non-negativity constraints.
 
 ---
 
@@ -163,7 +159,7 @@ flowchart TD
 | **Week 6: Numerical Quadrature** | `src/numerical_integration.py` | 2D Composite Trapezoidal and Simpson's 1/3 integration over 2D pixel grids; comparison with 2D Gauss-Legendre quadrature; asymptotic grid refinement study (Δx, Δy → 0). |
 | **Week 7: Dynamic ODEs** | `src/dynamic_ode.py` | 1st-order vacuum leak decay `dP/dt = -k(P - P_atm)` comparing Explicit Euler `O(Δt)`, RK2 Heun's method `O(Δt²)`, Classical RK4 `O(Δt⁴)`, and exact analytical solution. |
 | **Week 9: Numerical Stability & Convergence** | `src/dynamic_ode.py` | Explicit Euler stability criterion Δt < 2/k = 2.5 s; temporal convergence order comparisons (`O(Δt)` vs `O(Δt²)` vs `O(Δt⁴)`). |
-| **Week 10: Physics Informed Boundary Constraints** | `src/numerical_integration.py` | Enforcing physical non-negativity and total bounding area constraints (A_defect ≤ A_tray = 43,200 mm²). |
+| **Week 10: Physics Regularization & Constraints** | `src/numerical_integration.py` | Enforcing physical non-negativity and total bounding area constraints (A_defect ≤ A_tray = 43,200 mm²). |
 
 ---
 
