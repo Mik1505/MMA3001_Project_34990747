@@ -37,8 +37,6 @@ All repository directories are structured in lowercase format, matching the GitH
 MMA3001_Project_34990747/
 ├── README.md                           # Master orientation, engineering context, directory guide, and AI statement
 ├── LICENSE                             # MIT Open Source License
-├── CITATIONS.bib                       # BibTeX citation entry for benchmark dataset and repository
-├── CITATION.cff                        # Machine-readable Citation File Format for GitHub citation
 ├── .gitignore                          # Git file exclusion rules
 │
 ├── artifacts/                          # Visual inspection figures & verification deliverables
@@ -258,32 +256,13 @@ The author takes full intellectual ownership and responsibility for all algorith
 
 ---
 
-## 9. Dataset Attribution & Citation
+## 9. Dataset Reference & Attribution
 
-This project utilizes the open-source **Pork Rasher Error(Packaging) Dataset** hosted on Roboflow Universe for training, validation, and benchmarking of defect detection models.
-
-- **Dataset Name:** Pork Rasher Error(Packaging) Dataset
-- **Publisher / Repository:** Roboflow Universe
-- **Author:** Hello
-- **Workspace & Project:** `hello-2aqe0/pork-rasher-error-packaging`
-- **URL:** [https://universe.roboflow.com/hello-2aqe0/pork-rasher-error-packaging](https://universe.roboflow.com/hello-2aqe0/pork-rasher-error-packaging)
-- **Publication Date:** May 2025 (visited: 2026-10-23)
-
-### BibTeX Citation
-```bibtex
-@misc{ pork-rasher-error-packaging_dataset,
-  title = { Pork Rasher Error(Packaging) Dataset },
-  type = { Open Source Dataset },
-  author = { Hello },
-  howpublished = { \url{ https://universe.roboflow.com/hello-2aqe0/pork-rasher-error-packaging } },
-  url = { https://universe.roboflow.com/hello-2aqe0/pork-rasher-error-packaging },
-  journal = { Roboflow Universe },
-  publisher = { Roboflow },
-  year = { 2025 },
-  month = { may },
-  note = { visited on 2026-10-23 },
-}
-```
+The computer vision models in this project were trained and evaluated using the open-source **Pork Rasher Error(Packaging) Dataset**:
+- **Dataset:** Pork Rasher Error(Packaging) Dataset
+- **Author / Source:** Hello (Roboflow Universe)
+- **Available at:** [https://universe.roboflow.com/hello-2aqe0/pork-rasher-error-packaging](https://universe.roboflow.com/hello-2aqe0/pork-rasher-error-packaging)
+- **Release / Date:** May 2025 (Accessed October 2026)
 
 ---
 
